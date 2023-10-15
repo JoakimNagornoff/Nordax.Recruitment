@@ -1,49 +1,59 @@
 # Nordax recruitment assignment 
-Hi! The purpose of this assignment is to get familiar with the nordax stack and to solve a realistic use case.
+Welcome to the Nordax recruitment assignment! This task will help you familiarize yourself with the Nordax tech stack and challenge you with a realistic use case.
 
 ### The task at hand
-The task at hand consists in writing code in all parts of the stack:
-1.	**Frontend:** In the LoanApplication component
-    1. Implement a form for applying for a loan. Should contain a few fields such as:
-        * textboxes
-        * radio buttons
-        * checkboxes
-        * dropdowns 
-        * file uploads
-    2. Implement a simple loan-application overview to display current loan-applications
-2.	**Backend:** Start in the LoanApplication controller
-    1. Implement support in the API to accept loan application data
-    2. Implement support to fetch loan applications and corresponding files
-3.	**Database** (Using Entity Framework):
-    1. Implement relevant entities, repositories and dependencies
-    2. Database changes should be version controlled using ef core migrations
-4.	**Filestorage**
-    - Store files conveniently
-5.  **Write** a short description of your solution
+The assignment involves writing code in different parts of the stack:
+1.	**Frontend (React)** In the LoanApplication component, your tasks are:
+    1. Implement a loan application form with various fields, including:
+        * Textboxes
+        * Radio buttons
+        * Checkboxes
+        * Dropdowns 
+        * File uploads
+    2. Create a simple loan application overview to display current loan applications.
+2.	**Backend (.NET7 API):** Start working in the LoanApplication controller:
+    1. Develop API endpoints to fetch and accept loan application data.
+    2. Implement support to upload and fetch loan applications and associated files.
+
+### **Database** (Using Entity Framework):
+Incorporate relevant entities, repositories, and dependencies. Ensure that database changes are version controlled using EF Core migrations.
+
+###	**Filestorage**
+Design a file storage mechanism for storing files conveniently.
+
+###  **Documentation** 
+Write a brief description of your solution to help reviewers understand your approach.
 
 ### Prerequisits
+Before you begin, make sure you have the following tools and software installed:
 - [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [Node.js](https://nodejs.org/en/download/)
 - [SQL server](https://www.microsoft.com/sv-se/sql-server/sql-server-downloads)
 
-#### Optional
+### Optional
 - [Docker](https://www.docker.com/products/docker-desktop)
 
 ### IDEs
-Obviously, you are allowed to use any IDE you like but we tend to use: 
+While you can use any IDE you prefer, these are what we tend to use:
 * Visual Studio
 * Jetbrains Rider 
 * Visual Code 
 * SQL Management Studio 
 
-### What we like
-* Clean, effective and self-documenting code
-* Test-coverage (Unit tests are enough, but an example of some kind of end-to-end component test is a big plus)
+### Coding Guidelines
+We value the following principles:
+* Clean, efficient, and self-documenting code
+* Understanding of test coverage (Unit tests are sufficient, but including an example of an end-to-end or component test is a significant plus)
 * Inversion of control
 * Unit of work
 * Conventional commits
-* The CQS design pattern
+* Following the CQS (Command Query Separation) design pattern
+* SOLID principles
 
 ### DOs and DONTs
-* Feel free to use any third party libraries (nuget or npm) you see fitting.
-* Dont go all the way implementing everything production-ready. A nice proof of concept of the above task is enough as long you are ready to discuss possible improvements and/or alternative solutions.
+Further guidelines to keep in mind:
+* You are free to use third-party libraries (NuGet or npm) if they are relevant to your solution.
+* You don't need to implement a production-ready solution. A well thought through proof of concept for the assigned tasks is sufficient. However, be prepared to discuss possible improvements and alternative solutions.
+* Note that the current codebase may have imperfections. Feel free to highlight areas that could be implemented differently or improved upon.
+
+Happy coding, and we look forward to reviewing your solution! If you have any questions, don't hesitate to reach out.
