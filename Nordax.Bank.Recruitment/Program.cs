@@ -56,7 +56,6 @@ else
 
 app.UseStaticFiles();
 app.UseSpaStaticFiles();
-app.UseHttpsRedirection();
 
 app.UseRouting();
 

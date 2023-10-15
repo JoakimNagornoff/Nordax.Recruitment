@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Route} from 'react-router';
+import {Route, Routes} from 'react-router';
 import {Layout} from './components/Layout';
 import {Home} from './components/home/Home';
 import {LoanApplication} from './components/loan-application/LoanApplication';
@@ -10,10 +10,12 @@ import {Unsubscribe} from "./components/unsubscribe/Unsubscribe";
 export const App = () => {
     return (
         <Layout>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='/loan-application' component={LoanApplication} />
-            <Route exact path='/unsubscribe/:userId' component={Unsubscribe} />
+            <Routes>
+                <Route path='/' Component={Home} />
+                <Route path='/signup' Component={Signup} />
+                <Route path='/loan-application' Component={LoanApplication} />
+                <Route path='/unsubscribe/:userId' Component={Unsubscribe} />                
+            </Routes>
         </Layout>
     );
 };

@@ -1,23 +1,24 @@
-import {RouteComponentProps} from "react-router";
-import {Col, Container, Fade, Row} from "reactstrap";
-import {Logo} from "../common/logo/Logo";
-import {Button} from "../common/button/Button";
+import { Col, Container, Fade, Row } from "reactstrap";
+import { Logo } from "../common/logo/Logo";
+import { Button } from "../common/button/Button";
 import * as React from "react";
-import {useState} from "react";
-import {useHomeStyles, useSocialMediaStyles} from "../home/home.styles";
-import {WebApiClient} from "../../common/webApiClient";
+import { useState } from "react";
+import { useHomeStyles, useSocialMediaStyles } from "../home/home.styles";
+import { WebApiClient } from "../../common/webApiClient";
+import { useParams } from "react-router-dom";
 
-export const Unsubscribe = (props: RouteComponentProps<{userId: string}>) => {
+export const Unsubscribe = () => {
     const { buttonStyle } = useHomeStyles();
     const [unsubscribeMessage, setUnsubscribeMessage] = useState<string | null>(null);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const { iconStyle, linkStyle } = useSocialMediaStyles();
     const apiClient = WebApiClient();
+    const params = useParams();
 
     const onSubmit = () => {
         setUnsubscribeMessage(null);
         setSubmitError(null);
-        apiClient.delete('api/subscriber/' + props.match.params.userId)
+        apiClient.delete('api/subscriber/' + params.userId)
             .then((res) => {
                 setUnsubscribeMessage("Unsubscribed successfully")
             }).catch(e => {
