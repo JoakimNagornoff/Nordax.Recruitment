@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Nordax.Bank.Recruitment.DataAccess.Exceptions
+namespace Nordax.Bank.Recruitment.DataAccess.Exceptions;
+
+public class EmailAlreadyRegisteredException : Exception
 {
-    public class EmailAlreadyRegisteredException : Exception
-    {
-    }
 }
