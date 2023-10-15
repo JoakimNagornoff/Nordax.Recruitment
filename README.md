@@ -22,7 +22,7 @@ The task at hand consists in writing code in all parts of the stack:
 5.  **Write** a short description of your solution
 
 ### Prerequisits
-- [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [Node.js](https://nodejs.org/en/download/)
 - [SQL server](https://www.microsoft.com/sv-se/sql-server/sql-server-downloads)
 
@@ -41,6 +41,8 @@ Obviously, you are allowed to use any IDE you like but we tend to use:
 * Test-coverage (Unit tests are enough, but an example of some kind of end-to-end component test is a big plus)
 * Inversion of control
 * Unit of work
+* Conventional commits
+* The CQS design pattern
 
 ### DOs and DONTs
 * Feel free to use any third party libraries (nuget or npm) you see fitting.

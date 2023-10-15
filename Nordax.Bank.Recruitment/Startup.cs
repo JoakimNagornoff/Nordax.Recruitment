@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Nordax.Bank.Recruitment.Configuration;
+using System.Text.Json.Serialization;
+using Nordax.Bank.Recruitment.Domain.Interfaces;
 
 namespace Nordax.Bank.Recruitment
 {
@@ -27,7 +29,9 @@ namespace Nordax.Bank.Recruitment
                 c.EnableAnnotations();
             });
 
-            services.AddControllers().AddControllersAsServices();
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+                .AddControllersAsServices();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
@@ -64,7 +68,8 @@ namespace Nordax.Bank.Recruitment
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (_configuration["Environment"] == "Local") spa.UseReactDevelopmentServer("start");
+                var appConfig = spa.ApplicationBuilder.ApplicationServices.GetRequiredService<IAppConfig>();
+                if (appConfig.Environment == "Local") { spa.UseReactDevelopmentServer("start"); }
             });
         }
     }

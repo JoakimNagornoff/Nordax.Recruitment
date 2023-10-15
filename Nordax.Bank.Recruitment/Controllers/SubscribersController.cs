@@ -4,76 +4,71 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nordax.Bank.Recruitment.DataAccess.Exceptions;
-using Nordax.Bank.Recruitment.Domain.Services;
+using Nordax.Bank.Recruitment.Domain.Interfaces.Commands;
+using Nordax.Bank.Recruitment.Domain.Interfaces.Queries;
 using Nordax.Bank.Recruitment.Models.Subscriber;
-using Swashbuckle.AspNetCore.Annotations;
 
-namespace Nordax.Bank.Recruitment.Controllers
+namespace Nordax.Bank.Recruitment.Controllers;
+
+[ApiController]
+[Route("api/subscriber")]
+public class SubscribersController : ControllerBase
 {
-    [ApiController]
-    [Route("api/subscriber")]
-    public class SubscribersController : ControllerBase
+    private readonly ISubscriptionCommands _subscriptionCommands;
+    private readonly ISubscriptionQueries _subscriptionQueries;
+
+    public SubscribersController(ISubscriptionCommands subscriptionCommands, ISubscriptionQueries subscriptionQueries)
     {
-        private readonly ISubscriptionService _subscriptionService;
+        _subscriptionCommands = subscriptionCommands;
+        _subscriptionQueries = subscriptionQueries;
+    }
 
-        public SubscribersController(ISubscriptionService subscriptionService)
+    [HttpPost]
+    public async Task<IActionResult> AddSubscriber([Required] [FromBody] NewSubscriberRequest request)
+    {
+        try
         {
-            _subscriptionService = subscriptionService;
+            var subscriberId = await _subscriptionCommands.RegisterSubscriptionAsync(request.Name, request.Email);
+            return Ok(new NewSubscriberResponse(subscriberId));
         }
-
-        [HttpPost]
-        [SwaggerResponse(StatusCodes.Status200OK, "Subscription registered successfully")]
-        [SwaggerResponse(StatusCodes.Status409Conflict, "Email address already registered")]
-        public async Task<IActionResult> AddSubscriber([Required] [FromBody] NewSubscriberRequest request)
+        catch (Exception e)
         {
-            try
-            {
-                var subscriberId = await _subscriptionService.RegisterSubscriptionAsync(request.Name, request.Email);
-                return Ok(new NewSubscriberResponse(subscriberId));
-            }
-            catch (Exception e)
-            {
-                if (e is EmailAlreadyRegisteredException) return Conflict($"Email {request.Email} already registered");
-                Console.WriteLine(e);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            if (e is EmailAlreadyRegisteredException) return Conflict($"Email {request.Email} already registered");
+            Console.WriteLine(e);
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
+    }
 
-        [HttpDelete("{subscriberId:Guid}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Unsubscribed successfully")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "User not found")]
-        public async Task<IActionResult> DeleteSubscriber([Required] [FromRoute] Guid subscriberId)
+    [HttpDelete("{subscriberId:Guid}")]
+    public async Task<IActionResult> DeleteSubscriber([Required] [FromRoute] Guid subscriberId)
+    {
+        try
         {
-            try
-            {
-                await _subscriptionService.DeleteSubscriberAsync(subscriberId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                if (e is UserNotFoundException) return NotFound("No user found with that id");
-                Console.WriteLine(e);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            await _subscriptionCommands.DeleteSubscriberAsync(subscriberId);
+            return Ok();
         }
-
-        [HttpGet("{subscriberId:Guid}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "User fetched successfully", typeof(SubscriberResponse))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "User not found")]
-        [ProducesResponseType(typeof(SubscriberResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetSubscriber([Required] [FromRoute] Guid subscriberId)
+        catch (Exception e)
         {
-            try
-            {
-                var subscriber = await _subscriptionService.GetSubscriberAsync(subscriberId);
-                return Ok(new SubscriberResponse(subscriber));
-            }
-            catch (Exception e)
-            {
-                if (e is UserNotFoundException) return NotFound("No user found with that id");
-                Console.WriteLine(e);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            if (e is UserNotFoundException) return NotFound("No user found with that id");
+            Console.WriteLine(e);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpGet("{subscriberId:Guid}")]
+    [ProducesResponseType(typeof(SubscriberResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetSubscriber([Required] [FromRoute] Guid subscriberId)
+    {
+        try
+        {
+            var subscriber = await _subscriptionQueries.GetSubscriberAsync(subscriberId);
+            return Ok(new SubscriberResponse(subscriber.Name, subscriber.Id));
+        }
+        catch (Exception e)
+        {
+            if (e is UserNotFoundException) return NotFound("No user found with that id");
+            Console.WriteLine(e);
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

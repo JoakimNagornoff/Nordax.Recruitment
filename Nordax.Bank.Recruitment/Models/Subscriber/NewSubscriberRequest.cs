@@ -1,13 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Nordax.Bank.Recruitment.Models.Subscriber
-{
-    public class NewSubscriberRequest
-    {
-        [Required] public string Name { get; set; }
+namespace Nordax.Bank.Recruitment.Models.Subscriber;
 
-        [Required]
-        [EmailAddress(ErrorMessage = "Not a valid email")]
-        public string Email { get; set; }
-    }
-}
+public record NewSubscriberRequest(
+    [Required] string Name,
+    [Required] [EmailAddress(ErrorMessage = "Not a valid email")] string Email
+);

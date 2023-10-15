@@ -1,6 +1,3 @@
-﻿namespace Nordax.Bank.Recruitment.Models.LoanApplication
-{
-	public class LoanApplicationResponse
-	{
-	}
-}
+﻿namespace Nordax.Bank.Recruitment.Models.LoanApplication;
+
+public record LoanApplicationResponse();

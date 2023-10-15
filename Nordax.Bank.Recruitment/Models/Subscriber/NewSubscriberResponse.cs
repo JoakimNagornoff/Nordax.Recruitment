@@ -1,14 +1,5 @@
 ﻿using System;
 
-namespace Nordax.Bank.Recruitment.Models.Subscriber
-{
-    public class NewSubscriberResponse
-    {
-        public NewSubscriberResponse(Guid subscriberId)
-        {
-            SubscriberId = subscriberId;
-        }
+namespace Nordax.Bank.Recruitment.Models.Subscriber;
 
-        public Guid SubscriberId { get; set; }
-    }
-}
+public record NewSubscriberResponse(Guid SubscriberId);

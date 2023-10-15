@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Nordax.Bank.Recruitment.Shared.Models;
+using Nordax.Bank.Recruitment.Domain.Models;
 
 namespace Nordax.Bank.Recruitment.DataAccess.Entities
 {
-    public class Subscription
+    public sealed class Subscription
     {
         public Subscription()
         {
@@ -25,15 +25,7 @@ namespace Nordax.Bank.Recruitment.DataAccess.Entities
 
         public DateTime SignUpDate { get; set; }
 
-        public SubscriberModel ToDomainModel()
-        {
-            return new SubscriberModel()
-            {
-                Id = Id,
-                Email = Email,
-                Name = Name,
-                SignUpDate = SignUpDate
-            };
-        }
+        public SubscriberModel ToDomainModel() => new(Id, Name, Email, SignUpDate);
+        
     }
 }

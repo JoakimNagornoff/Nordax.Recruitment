@@ -7,22 +7,23 @@
 		<IsPackable>false</IsPackable>
 		<SpaRoot>ClientApp\</SpaRoot>
 		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.3" />
-		<PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.8.3" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.5" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.12" />
+		<PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.7.2" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,7 +35,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Nordax.Bank.Recruitment.Domain\Nordax.Bank.Recruitment.Domain.csproj" />
-	  <ProjectReference Include="..\Nordax.Bank.Recruitment.Shared\Nordax.Bank.Recruitment.Shared.csproj" />
+	  <ProjectReference Include="..\Nordax.Bank.Recruitment.Logic\Nordax.Bank.Recruitment.Logic.csproj" />
 	</ItemGroup>
 
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
