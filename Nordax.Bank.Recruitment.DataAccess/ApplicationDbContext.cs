@@ -13,6 +13,8 @@ namespace Nordax.Bank.Recruitment.DataAccess
         public DbSet<Subscription> Subscriptions { get; set; }
 
         public DbSet<Loan> Loans {get; set;}
+
+        public DbSet<FileRecord> FileRecords{get; set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
