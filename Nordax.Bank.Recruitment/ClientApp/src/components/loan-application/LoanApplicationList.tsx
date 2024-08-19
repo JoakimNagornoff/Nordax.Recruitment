@@ -53,7 +53,6 @@ const LoanApplicationList = () => {
   useEffect(() => {
     apiClient.get<LoanModelList[]>('api/loan-application').then((res) => {
       if (!res) {
-        console.log('res', res)
         setIsLoading(true)
       } else {
         const data = res;
