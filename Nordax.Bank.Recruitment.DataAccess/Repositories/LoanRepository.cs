@@ -7,6 +7,8 @@ using Nordax.Bank.Recruitment.DataAccess.Entities;
 using Nordax.Bank.Recruitment.DataAccess.Exceptions;
 using Nordax.Bank.Recruitment.Domain.Interfaces.Repositories;
 using Nordax.Bank.Recruitment.Domain.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Nordax.Bank.Recruitment.DataAccess.Repositories;
 
@@ -30,7 +32,7 @@ public class LoanRepository : ILoanRepository
   public async Task<LoanModel> GetLoanApplication(Guid loanApplicationId)
   {
     var loanApplication = await _applicationDbContext.Loans.FirstOrDefaultAsync(l => l.Id == loanApplicationId);
-    if (loanApplication == null) throw new UserNotFoundException();
+    if (loanApplication == null) throw new LoanApplicationException();
     return loanApplication.ToDomainModel();
   }
 
@@ -42,4 +44,26 @@ public class LoanRepository : ILoanRepository
 
     return loanModels;
   }
+
+  public async Task<Guid> UploadFile(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            throw new ArgumentException("No file uploaded.");
+
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream);
+
+        var fileRecord = new FileRecord
+        {
+            Id = Guid.NewGuid(),
+            FileName = file.FileName,
+            FileType = file.ContentType,
+            FileData = memoryStream.ToArray()
+        };
+
+        _applicationDbContext.FileRecords.Add(fileRecord);
+        await _applicationDbContext.SaveChangesAsync();
+
+        return fileRecord.Id;
+    }
 }

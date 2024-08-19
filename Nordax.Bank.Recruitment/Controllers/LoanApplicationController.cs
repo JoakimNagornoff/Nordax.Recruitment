@@ -26,8 +26,17 @@ public class LoanApplicationController : ControllerBase
     [ProducesResponseType(typeof(FileResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFile(IFormFile file)
     {
-        //TODO: Store file
-         return Ok();
+        if (file == null || file.Length == 0)
+        return BadRequest("No file uploaded.");
+        try {
+            var uploadFileId =  await _loanapplicationCommands.UploadFileAsync(file);
+            return Ok(new FileResponse(uploadFileId));
+        } catch (Exception e)
+            {
+            Console.WriteLine(e);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        
+            }     
     }
 
     [HttpPost]
@@ -46,19 +55,19 @@ public class LoanApplicationController : ControllerBase
 
     }
 
-   [HttpGet("{fileId:Guid}")]
+    [HttpGet("{fileId:Guid}")]
     [ProducesResponseType(typeof(LoanApplicationResponse), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetLoanApplication([FromRoute] Guid applicationId)
+    public async Task<IActionResult> GetLoanApplication([FromRoute] Guid fileId)
     {
-        try {
-        var loanApplication = await _loanapplicationQueries.GetLoanApplicationAsync(applicationId);
+        try 
+        {
+        var loanApplication = await _loanapplicationQueries.GetLoanApplicationAsync(fileId);
         return Ok(new LoanApplicationResponse(loanApplication.Name, loanApplication.Email, loanApplication.Amount, loanApplication.Id));
         }
         catch(Exception e)
         {
             Console.WriteLine(e);
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        
+            return StatusCode(StatusCodes.Status500InternalServerError);  
         }
     }
 
